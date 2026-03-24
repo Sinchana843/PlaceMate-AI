@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PlaceMate AI</title>
+
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body class="bg-gradient-to-br from-black via-gray-900 to-black text-white">
+<!-- NAVBAR -->
+<nav class="flex justify-between items-center p-5 bg-black shadow-lg">
+  <h1 class="text-2xl text-blue-400 font-bold">🚀 PlaceMate AI</h1>
+  <div>
+    <a href="test.html" class="mx-3 hover:text-blue-400">Mock Test</a>
+    <a href="resume.html" class="mx-3 hover:text-blue-400">Resume</a>
+  </div>
+</nav>
+<!-- HERO -->
+<div class="text-center mt-12">
+  <h1 class="text-5xl text-blue-400 font-bold mb-3">
+    Smart Placement Preparation Platform
+  </h1>
+  <p class="text-gray-400 text-lg">
+    Practice • Analyze • Improve 🚀
+  </p>
+</div>
+
+<!-- DASHBOARD -->
+<div class="grid md:grid-cols-4 gap-6 p-10">
+
+<div class="bg-gray-800 p-6 rounded-xl text-center hover:scale-105 transition">
+<h2 class="text-lg">Score</h2>
+<p id="score" class="text-2xl text-blue-400 mt-2">0%</p>
+</div>
+
+<div class="bg-gray-800 p-6 rounded-xl text-center hover:scale-105 transition">
+<h2 class="text-lg">Resume Score</h2>
+<p id="resumeScore" class="text-2xl text-green-400 mt-2">0%</p>
+</div>
+
+<div class="bg-gray-800 p-6 rounded-xl text-center hover:scale-105 transition">
+<h2 class="text-lg">Suggestion</h2>
+<p id="suggestion" class="text-yellow-400 mt-2">Start Preparation</p>
+</div>
+
+<div class="bg-gray-800 p-6 rounded-xl text-center hover:scale-105 transition">
+<h2 class="text-lg">Level</h2>
+<p id="level" class="text-purple-400 mt-2">Beginner</p>
+</div>
+
+</div>
+<!-- COMPANY MODULES -->
+<div class="p-10">
+<h2 class="text-3xl mb-6 text-blue-400">🏢 Company-wise Preparation</h2>
+
+<div class="grid md:grid-cols-2 gap-6">
+
+<div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition">
+<h3 class="text-xl text-blue-400">TCS</h3>
+<p class="text-gray-300 mt-2">Aptitude, Coding, English</p>
+<a href="https://www.geeksforgeeks.org" target="_blank" class="text-green-400">Resources</a>
+</div>
+
+<div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition">
+<h3 class="text-xl text-blue-400">Infosys</h3>
+<p class="text-gray-300 mt-2">Reasoning, Puzzle, Coding</p>
+<a href="https://www.javatpoint.com" target="_blank" class="text-green-400">Resources</a>
+</div>
+
+<div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition">
+<h3 class="text-xl text-blue-400">Wipro</h3>
+<p class="text-gray-300 mt-2">Aptitude, Verbal, Coding</p>
+<a href="https://www.indiabix.com" target="_blank" class="text-green-400">Resources</a>
+</div>
+
+<div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition">
+<h3 class="text-xl text-blue-400">Amazon</h3>
+<p class="text-gray-300 mt-2">DSA, System Design</p>
+<a href="https://leetcode.com" target="_blank" class="text-green-400">Practice</a>
+</div>
+
+</div>
+</div>
+<!-- FEATURES -->
+<div class="p-10">
+<h2 class="text-3xl mb-5 text-blue-400">✨ Features</h2>
+
+<ul class="space-y-3 text-gray-300">
+<li>✅ Mock Tests & Quiz</li>
+<li>✅ Resume Analyzer</li>
+<li>✅ AI-Based Suggestions</li>
+<li>✅ Dashboard Tracking</li>
+<li>✅ Company-wise Preparation</li>
+</ul>
+</div>
+
+<!-- SCRIPT -->
+<script>
+
+window.onload = function () {
+
+let score = parseInt(localStorage.getItem("score")) || 0;
+let resume = parseInt(localStorage.getItem("resumeScore")) || 0;
+
+document.getElementById("score").innerText = score + "%";
+document.getElementById("resumeScore").innerText = resume + "%";
+// Suggestions
+let suggestion = "Start Preparation";
+
+if (score > 70) suggestion = "Focus on DSA 🔥";
+else if (score > 40) suggestion = "Practice Aptitude ⚡";
+
+document.getElementById("suggestion").innerText = suggestion;
+
+// Level
+let level = "Beginner";
+if (score > 70) level = "Advanced";
+else if (score > 40) level = "Intermediate";
+
+document.getElementById("level").innerText = level;
+
+}
+
+</script>
+
+</body>
+</html>
