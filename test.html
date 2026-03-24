@@ -1,34 +1,63 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mock Test</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<title>Mock Test</title>
 </head>
 
-<body class="bg-black text-white p-10">
+<body style="background:#0f172a;color:white;font-family:sans-serif">
 
-<h1 class="text-3xl mb-5">📝 Mock Test</h1>
+<h2>Mock Test</h2>
+<p>Time: <span id="t">60</span></p>
 
-<p>1. C is?</p>
-<input type="radio" name="q1" value="correct"> Programming Language<br>
-<input type="radio" name="q1"> Animal<br><br>
+<div id="q"></div>
+<button onclick="next()">Next</button>
 
-<button onclick="submitTest()" class="bg-blue-500 px-5 py-2 rounded">
-Submit Test
-</button>
+<h3 id="res"></h3>
 
 <script>
-function submitTest() {
-  let score = 0;
+let qs=[
+{q:"Binary search complexity?",o:["O(n)","O(log n)","O(n2)"],a:1},
+{q:"DBMS stands for?",o:["Data Base","Database Mgmt System","None"],a:1},
+{q:"OS manages?",o:["Hardware","Software","Both"],a:2},
+{q:"Stack follows?",o:["FIFO","LIFO","None"],a:1},
+{q:"HTML used for?",o:["Structure","Style","Logic"],a:0},
+];
 
-  let q1 = document.querySelector('input[name="q1"]:checked');
+// make 20 different shuffled
+while(qs.length<20){qs.push(...qs)}
+qs=qs.slice(0,20).sort(()=>Math.random()-0.5);
 
-  if (q1 && q1.value === "correct") score += 100;
+let i=0,score=0,time=60;
 
-  localStorage.setItem("score", score);
+setInterval(()=>{
+time--;
+document.getElementById("t").innerText=time;
+if(time<=0) end();
+},1000);
 
-  alert("Test submitted!");
-  window.location.href = "index.html";
+function load(){
+let q=qs[i];
+let html=`<p>${i+1}. ${q.q}</p>`;
+q.o.forEach((x,j)=>{
+html+=`<button onclick="check(${j})">${x}</button>`;
+});
+document.getElementById("q").innerHTML=html;
+}
+load();
+
+function check(a){
+if(a===qs[i].a) score++;
+}
+
+function next(){
+i++;
+if(i>=20) end();
+else load();
+}
+
+function end(){
+document.getElementById("res").innerText="Score: "+score+"/20";
+localStorage.setItem("score",score);
 }
 </script>
 

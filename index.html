@@ -2,128 +2,250 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>PlaceMate AI</title>
+<title>PlacementPro Portal 🚀</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docx/7.7.0/docx.min.js"></script>
 
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com"></script>
-
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#0f172a,#1e3a8a);color:white;}
+header{display:flex;justify-content:space-between;padding:15px 30px;background:rgba(0,0,0,0.5);backdrop-filter:blur(10px);}
+nav a{color:#38bdf8;margin:0 10px;text-decoration:none;font-weight:bold;}
+.hero{text-align:center;padding:60px 20px;}
+.hero h1{font-size:40px;}
+.hero button{margin-top:20px;padding:12px 20px;background:#22c55e;border:none;border-radius:10px;cursor:pointer;}
+.card{margin:20px;padding:20px;border-radius:15px;background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);box-shadow:0 0 20px rgba(0,0,0,0.4);}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;}
+.box{padding:20px;border-radius:12px;background:#1e293b;transition:0.3s;cursor:pointer;text-align:center;}
+.box:hover{transform:scale(1.05);background:#3b82f6;}
+.btn{display:inline-block;padding:10px;margin:5px;border-radius:8px;background:#22c55e;text-decoration:none;color:white;cursor:pointer;}
+input,textarea{width:100%;padding:10px;margin:5px 0;border-radius:8px;border:none;}
+#resumePreview{background:white;color:black;padding:20px;border-radius:10px;overflow:auto;}
+img{width:100px;height:100px;border-radius:50%;object-fit:cover;}
+#chatBox{background:#020617;padding:10px;border-radius:10px;margin-top:10px;}
+@media(max-width:768px){.hero h1{font-size:28px;}}
+</style>
 </head>
 
-<body class="bg-gradient-to-br from-black via-gray-900 to-black text-white">
-<!-- NAVBAR -->
-<nav class="flex justify-between items-center p-5 bg-black shadow-lg">
-  <h1 class="text-2xl text-blue-400 font-bold">🚀 PlaceMate AI</h1>
-  <div>
-    <a href="test.html" class="mx-3 hover:text-blue-400">Mock Test</a>
-    <a href="resume.html" class="mx-3 hover:text-blue-400">Resume</a>
-  </div>
+<body>
+
+<header>
+<h2>🚀 PlacementPro</h2>
+<nav>
+<a href="#practice">Practice</a>
+<a href="#mocktest">Mock Test</a>
+<a href="#resumeSection">Resume</a>
 </nav>
+</header>
+
 <!-- HERO -->
-<div class="text-center mt-12">
-  <h1 class="text-5xl text-blue-400 font-bold mb-3">
-    Smart Placement Preparation Platform
-  </h1>
-  <p class="text-gray-400 text-lg">
-    Practice • Analyze • Improve 🚀
-  </p>
-</div>
+<section class="hero">
+<h1>Crack Your Dream Job 💼</h1>
+<p>Practice • Analyze • Improve • Get Placed</p>
+<button onclick="document.getElementById('practice').scrollIntoView()">Start Practice</button>
+</section>
 
 <!-- DASHBOARD -->
-<div class="grid md:grid-cols-4 gap-6 p-10">
+<section class="card">
+<h2>📊 Dashboard</h2>
+<p>Progress: <span id="progress">0</span>%</p>
+<p>Daily Streak: 🔥 <span id="streak">3</span> days</p>
+<p>Tips: <span id="tips">Solve at least 3 problems daily</span></p>
+</section>
 
-<div class="bg-gray-800 p-6 rounded-xl text-center hover:scale-105 transition">
-<h2 class="text-lg">Score</h2>
-<p id="score" class="text-2xl text-blue-400 mt-2">0%</p>
+<!-- PRACTICE RESOURCES -->
+<section class="card" id="practice">
+<h2>🧠 Practice Resources</h2>
+<div class="grid">
+<div class="box" onclick="window.open('https://www.w3schools.com/java/java_arrays.asp')">DSA</div>
+<div class="box" onclick="window.open('https://www.invensislearning.com/aptitude')">Aptitude</div>
+<div class="box" onclick="window.open('https://www.geeksforgeeks.org/dbms/')">DBMS</div>
+<div class="box" onclick="window.open('https://en.wikipedia.org/wiki/Operating_system')">Operating System</div>
+<div class="box" onclick="window.open('https://www.w3schools.com/html/')">Web Dev</div>
+</div>
+</section>
+
+<!-- MOCK TEST -->
+<section class="card" id="mocktest">
+<h2>📝 Mock Test (20 Questions)</h2>
+<p>Time: <span id="timer">120</span>s</p>
+<div id="questionBox"></div>
+<button onclick="nextQuestion()">Next</button>
+<h3 id="mockResult"></h3>
+</section>
+
+<!-- COMPANY-WISE PREPARATION -->
+<section class="card">
+<h2>🏢 Company-wise Preparation</h2>
+<div class="grid">
+<a class="btn" href="https://www.geeksforgeeks.org/tcs-nqt/" target="_blank">TCS</a>
+<a class="btn" href="https://www.geeksforgeeks.org/wipro-interview-preparation/" target="_blank">Wipro</a>
+<a class="btn" href="https://www.geeksforgeeks.org/amazon-interview-preparation/" target="_blank">Amazon</a>
+<a class="btn" href="https://www.geeksforgeeks.org/google-interview-preparation/" target="_blank">Google</a>
+<a class="btn" href="https://www.geeksforgeeks.org/microsoft-interview-preparation/" target="_blank">Microsoft</a>
+<a class="btn" href="https://www.geeksforgeeks.org/adobe-interview-preparation/" target="_blank">Adobe</a>
+<a class="btn" href="https://www.geeksforgeeks.org/infosys-interview-preparation/" target="_blank">Infosys</a>
+<a class="btn" href="https://www.geeksforgeeks.org/ibm-interview-preparation/" target="_blank">IBM</a>
+<a class="btn" href="https://www.geeksforgeeks.org/flipkart-interview-preparation/" target="_blank">Flipkart</a>
+<a class="btn" href="https://www.geeksforgeeks.org/cognizant-interview-preparation/" target="_blank">Cognizant</a>
+</div>
+</section>
+
+<!-- RESUME BUILDER -->
+<section class="card" id="resumeSection">
+<h2>📄 Resume Builder</h2>
+<div style="display:flex;gap:20px;">
+<div style="flex:1;">
+<input id="resName" placeholder="Full Name"><br>
+<input id="resAge" placeholder="Age"><br>
+<input id="resEmail" placeholder="Email"><br>
+<input id="resPhone" placeholder="Phone"><br>
+<input id="resLinkedin" placeholder="LinkedIn URL"><br>
+<input id="resJob" placeholder="Target Job"><br>
+<input type="file" id="resPhoto"><br>
+<textarea id="resEducation" placeholder="Education"></textarea><br>
+<textarea id="resExperience" placeholder="Experience"></textarea><br>
+<textarea id="resSkills" placeholder="Skills"></textarea><br>
+<textarea id="resAchievements" placeholder="Achievements"></textarea><br>
+<button onclick="generateResume()">Generate Resume</button>
+<button onclick="downloadPDF()">Download PDF</button>
 </div>
 
-<div class="bg-gray-800 p-6 rounded-xl text-center hover:scale-105 transition">
-<h2 class="text-lg">Resume Score</h2>
-<p id="resumeScore" class="text-2xl text-green-400 mt-2">0%</p>
-</div>
-
-<div class="bg-gray-800 p-6 rounded-xl text-center hover:scale-105 transition">
-<h2 class="text-lg">Suggestion</h2>
-<p id="suggestion" class="text-yellow-400 mt-2">Start Preparation</p>
-</div>
-
-<div class="bg-gray-800 p-6 rounded-xl text-center hover:scale-105 transition">
-<h2 class="text-lg">Level</h2>
-<p id="level" class="text-purple-400 mt-2">Beginner</p>
-</div>
-
-</div>
-<!-- COMPANY MODULES -->
-<div class="p-10">
-<h2 class="text-3xl mb-6 text-blue-400">🏢 Company-wise Preparation</h2>
-
-<div class="grid md:grid-cols-2 gap-6">
-
-<div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition">
-<h3 class="text-xl text-blue-400">TCS</h3>
-<p class="text-gray-300 mt-2">Aptitude, Coding, English</p>
-<a href="https://www.geeksforgeeks.org" target="_blank" class="text-green-400">Resources</a>
-</div>
-
-<div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition">
-<h3 class="text-xl text-blue-400">Infosys</h3>
-<p class="text-gray-300 mt-2">Reasoning, Puzzle, Coding</p>
-<a href="https://www.javatpoint.com" target="_blank" class="text-green-400">Resources</a>
-</div>
-
-<div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition">
-<h3 class="text-xl text-blue-400">Wipro</h3>
-<p class="text-gray-300 mt-2">Aptitude, Verbal, Coding</p>
-<a href="https://www.indiabix.com" target="_blank" class="text-green-400">Resources</a>
-</div>
-
-<div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition">
-<h3 class="text-xl text-blue-400">Amazon</h3>
-<p class="text-gray-300 mt-2">DSA, System Design</p>
-<a href="https://leetcode.com" target="_blank" class="text-green-400">Practice</a>
-</div>
-
+<div style="flex:1;">
+<div id="resumePreview">Resume Preview</div>
 </div>
 </div>
-<!-- FEATURES -->
-<div class="p-10">
-<h2 class="text-3xl mb-5 text-blue-400">✨ Features</h2>
+</section>
 
-<ul class="space-y-3 text-gray-300">
-<li>✅ Mock Tests & Quiz</li>
-<li>✅ Resume Analyzer</li>
-<li>✅ AI-Based Suggestions</li>
-<li>✅ Dashboard Tracking</li>
-<li>✅ Company-wise Preparation</li>
-</ul>
-</div>
+<!-- CHATBOT -->
+<section class="card">
+<h2>🤖 AI Assistant</h2>
+<input id="chatInput" placeholder="Ask anything..."><button onclick="chat()">Ask</button>
+<div id="chatBox"></div>
+</section>
 
-<!-- SCRIPT -->
+<!-- CHARTS / ANALYTICS -->
+<section class="card">
+<h2>📊 Analytics</h2>
+<canvas id="chart"></canvas>
+</section>
+
 <script>
+// ----------------- MOCK TEST -------------------
+let questions=[
+{q:"Binary Search complexity?",o:["O(n)","O(log n)","O(n^2)"],a:1},
+{q:"Stack follows?",o:["FIFO","LIFO","Random"],a:1},
+{q:"DBMS stands for?",o:["DataBase Management System","Dynamic Base Mgmt","None"],a:0},
+{q:"OS main function?",o:["Manage Hardware","Compile Code","None"],a:0},
+{q:"HTML is?",o:["Markup","Programming","Styling"],a:0},
+{q:"Queue follows?",o:["FIFO","LIFO","Random"],a:0},
+{q:"Tree traversal?",o:["DFS/BFS","LIFO","FIFO"],a:0},
+{q:"SQL command to fetch?",o:["SELECT","UPDATE","DELETE"],a:0},
+{q:"Python is?",o:["Interpreted","Compiled","None"],a:0},
+{q:"What is DBMS?",o:["System managing databases","OS","Web"],a:0},
+{q:"Linked list type?",o:["Singly","Doubly","Both"],a:2},
+{q:"Heap structure?",o:["Max/Min","LIFO","FIFO"],a:0},
+{q:"Graph traversal?",o:["BFS/DFS","Only BFS","Only DFS"],a:0},
+{q:"Linux OS type?",o:["Kernel","DBMS","Compiler"],a:0},
+{q:"APTITUDE: 5+3=?",o:["8","9","7"],a:0},
+{q:"APTITUDE: 12*2?",o:["24","26","28"],a:0},
+{q:"CSS stands for?",o:["Cascading Style Sheets","Computer Style Sheet","None"],a:0},
+{q:"HTTP stands for?",o:["HyperText Transfer Protocol","Hyper Transfer Text","None"],a:0},
+{q:"Python list method?",o:["append()","add()","insertAt()"],a:0},
+{q:"DSA pattern: Sliding Window",o:["Used in arrays/strings","Linked list","Graph"],a:0},
+];
 
-window.onload = function () {
+let current=0,score=0,time=120;
+let timer=setInterval(()=>{
+time--;
+document.getElementById("timer").innerText=time;
+if(time<=0) endTest();
+},1000);
 
-let score = parseInt(localStorage.getItem("score")) || 0;
-let resume = parseInt(localStorage.getItem("resumeScore")) || 0;
+function loadQuestion(){
+let q=questions[current];
+let html=`<p>${current+1}. ${q.q}</p>`;
+q.o.forEach((op,index)=>{
+html+=`<button onclick="check(${index})">${op}</button> `;
+});
+document.getElementById("questionBox").innerHTML=html;
+}
+loadQuestion();
 
-document.getElementById("score").innerText = score + "%";
-document.getElementById("resumeScore").innerText = resume + "%";
-// Suggestions
-let suggestion = "Start Preparation";
-
-if (score > 70) suggestion = "Focus on DSA 🔥";
-else if (score > 40) suggestion = "Practice Aptitude ⚡";
-
-document.getElementById("suggestion").innerText = suggestion;
-
-// Level
-let level = "Beginner";
-if (score > 70) level = "Advanced";
-else if (score > 40) level = "Intermediate";
-
-document.getElementById("level").innerText = level;
-
+function check(a){
+if(a===questions[current].a) score++;
 }
 
+function nextQuestion(){
+current++;
+if(current>=questions.length){endTest();}else{loadQuestion();}
+}
+
+function endTest(){
+clearInterval(timer);
+document.getElementById("mockResult").innerText="Score: "+score+"/"+questions.length;
+}
+
+// ----------------- RESUME BUILDER -------------------
+let imgData="";
+document.getElementById("resPhoto").addEventListener("change",function(e){
+let reader=new FileReader();
+reader.onload=()=>imgData=reader.result;
+reader.readAsDataURL(e.target.files[0]);
+});
+
+function generateResume(){
+let name=document.getElementById("resName").value;
+let age=document.getElementById("resAge").value;
+let email=document.getElementById("resEmail").value;
+let phone=document.getElementById("resPhone").value;
+let linkedin=document.getElementById("resLinkedin").value;
+let job=document.getElementById("resJob").value;
+let edu=document.getElementById("resEducation").value;
+let exp=document.getElementById("resExperience").value;
+let skills=document.getElementById("resSkills").value;
+let ach=document.getElementById("resAchievements").value;
+
+document.getElementById("resumePreview").innerHTML=`
+<center>
+${imgData?`<img src="${imgData}">`:""}
+<h2>${name}</h2>
+<p>Age: ${age} | Email: ${email} | Phone: ${phone}</p>
+<p>LinkedIn: ${linkedin}</p>
+<p>Target Job: ${job}</p>
+</center>
+<hr>
+<h3>Education</h3><p>${edu}</p>
+<h3>Experience</h3><p>${exp}</p>
+<h3>Skills</h3><p>${skills}</p>
+<h3>Achievements</h3><p>${ach}</p>
+`;
+}
+
+function downloadPDF(){
+let element=document.getElementById("resumePreview");
+html2pdf().from(element).save("Resume.pdf");
+}
+
+// ----------------- CHATBOT -------------------
+function chat(){
+let q=document.getElementById("chatInput").value.toLowerCase();
+let ans="";
+if(q.includes("dsa")) ans="DSA Tip: Start with arrays, then strings, recursion, trees, graphs. Practice daily.";
+else if(q.includes("dbms")) ans="DBMS Tip: Understand SQL queries, normalization, ER diagrams.";
+else if(q.includes("os")) ans="OS Tip: Learn processes, threads, scheduling, memory management.";
+else if(q.includes("aptitude")) ans="Aptitude Tip: Practice time and work, percentages, probability daily.";
+else ans="Ask about DSA, DBMS, OS, Aptitude or resume tips!";
+document.getElementById("chatBox").innerText=ans;
+}
+
+// ----------------- ANALYTICS -------------------
+new Chart(document.getElementById("chart"),{
+type:'bar',
+data:{labels:['DSA','DBMS','OS','Aptitude','Web'],datasets:[{data:[70,60,50,65,55],backgroundColor:['#3b82f6','#22c55e','#9333ea','#f97316','#8b5cf6']}]}
+});
 </script>
 
 </body>

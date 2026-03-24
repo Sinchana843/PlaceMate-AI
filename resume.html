@@ -1,45 +1,130 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Resume</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+<title>AI Resume Builder</title>
+
+<style>
+body{
+  font-family:sans-serif;
+  background:linear-gradient(135deg,#0f172a,#1e3a8a);
+  color:white;
+}
+
+.container{
+  display:flex;
+  gap:20px;
+  padding:20px;
+}
+
+.form,.preview{
+  flex:1;
+  padding:20px;
+  border-radius:10px;
+  background:rgba(255,255,255,0.1);
+}
+
+.preview{
+  background:white;
+  color:black;
+}
+
+img{
+  width:100px;
+  height:100px;
+  border-radius:50%;
+}
+</style>
 </head>
 
-<body class="bg-black text-white p-10">
+<body>
 
-<h1 class="text-3xl mb-5">📄 Resume Builder</h1>
+<h2 style="text-align:center;">Resume Builder</h2>
 
-<input id="skills" placeholder="Enter skills"
-class="p-2 text-black w-full mb-3"><br>
+<div class="container">
 
-<textarea id="projects" placeholder="Enter projects"
-class="p-2 text-black w-full mb-3"></textarea>
+<div class="form">
 
-<button onclick="analyzeResume()" 
-class="bg-green-500 px-5 py-2 rounded">
-Analyze Resume
-</button>
+<input id="name" placeholder="Name"><br>
+<input id="email" placeholder="Email"><br>
+<input id="phone" placeholder="Phone"><br>
+<input id="linkedin" placeholder="LinkedIn"><br>
 
-<p id="result" class="mt-5"></p>
+<input type="file" id="photo"><br>
+
+<textarea id="education" placeholder="Education"></textarea><br>
+<textarea id="experience" placeholder="Experience"></textarea><br>
+<textarea id="skills" placeholder="Skills"></textarea><br>
+<textarea id="achievements" placeholder="Achievements"></textarea><br>
+
+<button onclick="generate()">Generate</button>
+<button onclick="analyze()">AI Analyze</button>
+
+<p id="result"></p>
+
+</div>
+
+<div class="preview">
+  <div id="resume">Preview</div>
+</div>
+
+</div>
 
 <script>
-function analyzeResume() {
+let img="";
 
-  let skills = document.getElementById("skills").value.toLowerCase();
-  let projects = document.getElementById("projects").value;
+// FIX IMAGE
+document.getElementById("photo").addEventListener("change",function(e){
+  let reader=new FileReader();
+  reader.onload=function(){
+    img=reader.result;
+  }
+  reader.readAsDataURL(e.target.files[0]);
+});
 
-  let score = 50;
+function generate(){
+  let name=document.getElementById("name").value;
+  let email=document.getElementById("email").value;
+  let phone=document.getElementById("phone").value;
+  let linkedin=document.getElementById("linkedin").value;
+  let education=document.getElementById("education").value;
+  let experience=document.getElementById("experience").value;
+  let skills=document.getElementById("skills").value;
+  let achievements=document.getElementById("achievements").value;
 
-  if (skills.includes("dsa")) score += 20;
-  if (skills.includes("java") || skills.includes("c")) score += 10;
-  if (projects.length > 20) score += 20;
+  document.getElementById("resume").innerHTML=`
+    <center>
+      ${img ? `<img src="${img}">` : ""}
+      <h2>${name}</h2>
+      <p>${email} | ${phone}</p>
+      <p>${linkedin}</p>
+    </center>
+    <hr>
+    <h3>Education</h3><p>${education}</p>
+    <h3>Experience</h3><p>${experience}</p>
+    <h3>Skills</h3><p>${skills}</p>
+    <h3>Achievements</h3><p>${achievements}</p>
+  `;
+}
 
-  localStorage.setItem("resumeScore", score);
+// FIX AI ANALYZER
+function analyze(){
+  let score=0;
+  let msg=[];
+
+  if(document.getElementById("skills").value.length>10) score+=25;
+  else msg.push("Add more skills");
+
+  if(document.getElementById("experience").value.length>20) score+=25;
+  else msg.push("Add experience");
+
+  if(document.getElementById("achievements").value.length>15) score+=25;
+  else msg.push("Add achievements");
+
+  if(document.getElementById("linkedin").value.includes("linkedin")) score+=25;
+  else msg.push("Add LinkedIn");
 
   document.getElementById("result").innerText =
-    "Resume Score: " + score + "%";
-
-  alert("Analysis Done!");
+    "Score: "+score+"/100 | Suggestions: "+msg.join(", ");
 }
 </script>
 
